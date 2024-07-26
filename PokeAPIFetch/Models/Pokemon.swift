@@ -8,7 +8,7 @@
 import Foundation
 
 struct Results: Decodable {
-    let results: [Results]
+    let results: [Result]
 }
 
 struct Result: Decodable {

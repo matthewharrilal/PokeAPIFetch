@@ -18,55 +18,9 @@
             endingLineNumber = "23"
             landmarkName = "fetchAllPokemon()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D1A3B6DD-A598-4D09-B6D2-997470E9EE7D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PokeAPIFetch/Networking/NetworkService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "fetchAllPokemon()"
-            landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "D1A3B6DD-A598-4D09-B6D2-997470E9EE7D - 5c07c99e447e53f9"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for PokeAPIFetch.NetworkServiceImplementation.fetchAllPokemon() async -&gt; Swift.Optional&lt;PokeAPIFetch.Results&gt;"
-                  moduleName = "PokeAPIFetch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/spacewizardmoneygang/Desktop/PokeAPIFetch/PokeAPIFetch/Networking/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "22"
-                  endingLineNumber = "22"
-                  offsetFromSymbolStart = "272">
-               </Location>
-               <Location
-                  uuid = "D1A3B6DD-A598-4D09-B6D2-997470E9EE7D - 7852374209ff8e99"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for PokeAPIFetch.NetworkServiceImplementation.fetchAllPokemon() async -&gt; Swift.Optional&lt;PokeAPIFetch.Results&gt;"
-                  moduleName = "PokeAPIFetch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/spacewizardmoneygang/Desktop/PokeAPIFetch/PokeAPIFetch/Networking/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "22"
-                  endingLineNumber = "22"
-                  offsetFromSymbolStart = "40">
-               </Location>
-               <Location
-                  uuid = "D1A3B6DD-A598-4D09-B6D2-997470E9EE7D - 73f7992f76119fff"
+                  uuid = "F1E44D73-16F5-4FDA-84D9-53F178FB5E43 - 73f7992f76119f1c"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -76,24 +30,24 @@
                   urlString = "file:///Users/spacewizardmoneygang/Desktop/PokeAPIFetch/PokeAPIFetch/Networking/NetworkService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "22"
-                  endingLineNumber = "22"
-                  offsetFromSymbolStart = "88">
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "224">
                </Location>
                <Location
-                  uuid = "D1A3B6DD-A598-4D09-B6D2-997470E9EE7D - 633fb0f7193e7dfc"
+                  uuid = "F1E44D73-16F5-4FDA-84D9-53F178FB5E43 - cff1669828f41c5e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for PokeAPIFetch.NetworkServiceImplementation.fetchAllPokemon() async -&gt; Swift.Optional&lt;PokeAPIFetch.Results&gt;"
+                  symbolName = "(3) suspend resume partial function for PokeAPIFetch.NetworkServiceImplementation.fetchAllPokemon() async -&gt; Swift.Optional&lt;Swift.Array&lt;PokeAPIFetch.Result&gt;&gt;"
                   moduleName = "PokeAPIFetch"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/spacewizardmoneygang/Desktop/PokeAPIFetch/PokeAPIFetch/Networking/NetworkService.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "22"
-                  endingLineNumber = "22"
-                  offsetFromSymbolStart = "64">
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "224">
                </Location>
             </Locations>
          </BreakpointContent>
