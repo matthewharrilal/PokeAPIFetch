@@ -26,13 +26,26 @@ class ResultsViewController: UIViewController {
         
         view.backgroundColor = .red
         
-        Task { [weak self] in
-            guard let self = self else { return }
-            let results = await self.networkService.fetchAllPokemon()
-            print(results)
+        Task {
+            await fetchDetailsForAllPokemon()
         }
     }
-
-
 }
+
+private extension ResultsViewController {
+    
+    func fetchAllPokemon() async -> Results? {
+        let results = await self.networkService.fetchAllPokemon()
+        return results
+    }
+    
+    func fetchDetailsForAllPokemon() async {
+        let allPokemonDetails = await networkService.fetchAllPokemonDetails()
+        
+        for await pokemon in allPokemonDetails {
+            print(pokemon?.sprites)
+        }
+    }
+}
+
 
