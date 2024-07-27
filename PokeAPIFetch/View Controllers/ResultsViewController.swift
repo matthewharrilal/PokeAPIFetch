@@ -10,6 +10,15 @@ import UIKit
 class ResultsViewController: UIViewController {
     
     private let networkService: NetworkService
+    private var pokemonWithImages: [PokemonWithImage] = []
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.dataSource = self
+        tableView.register(ResultsTableViewCell.self, forCellReuseIdentifier: ResultsTableViewCell.identifier)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
     
     init(networkService: NetworkService) {
         self.networkService = networkService
@@ -24,33 +33,53 @@ class ResultsViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        view.backgroundColor = .red
+        setup()
         
         Task {
-            await fetchDetailsForAllPokemon()
+            await fetchPokemonWithImages()
         }
     }
 }
 
 private extension ResultsViewController {
     
-    func fetchAllPokemon() async -> Results? {
-        let results = await self.networkService.fetchAllPokemon()
-        return results
+    func setup() {
+        view.addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
     
-    func fetchDetailsForAllPokemon() async {
-        let allPokemonDetails = await networkService.fetchAllPokemonDetails()
+    func fetchPokemonWithImages() async {
+        async let pokemonWithImageStream = networkService.fetchImagesForPokemon(pokemonStream: networkService.fetchAllPokemonDetails())
         
-        var sprites: [URL] = []
-        
-        for await pokemon in allPokemonDetails {
-            if let frontDefault = pokemon?.sprites.frontDefault, let url = URL(string: frontDefault) {
-                sprites.append(url)
+        for await pokemonWithImage in await pokemonWithImageStream {
+            if let pokemonWithImage = pokemonWithImage {
+                pokemonWithImages.append(pokemonWithImage)
+                
+                tableView.insertRows(at: [IndexPath(row: pokemonWithImages.count - 1, section: 0)], with: .bottom)
             }
         }
+    }
+}
+
+extension ResultsViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        pokemonWithImages.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ResultsTableViewCell.identifier, for: indexPath) as? ResultsTableViewCell else { return UITableViewCell() }
         
-        await networkService.fetchImagesForPokemon(urls: sprites)
+        let pokemonWithImage = pokemonWithImages[indexPath.row]
+        cell.configure(pokemonWithImage)
+        
+        return cell
     }
 }
 

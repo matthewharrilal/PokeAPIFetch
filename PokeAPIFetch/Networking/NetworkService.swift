@@ -11,13 +11,16 @@ import UIKit
 protocol NetworkService: AnyObject {
     func fetchAllPokemon() async -> Results?
     func fetchAllPokemonDetails() async -> AsyncStream<Pokemon?>
-    func fetchImagesForPokemon(urls: [URL]) async -> AsyncStream<UIImage?>
+//    func fetchImagesForPokemon(urls: [URL]) async -> AsyncStream<UIImage?>
+    func fetchImagesForPokemon(pokemonStream: AsyncStream<Pokemon?>) async -> AsyncStream<PokemonWithImage?>
 }
 
 class NetworkServiceImplementation: NetworkService {
     
+    private var cache: NSCache = NSCache<NSString, PokemonWithImage>()
+    
     func fetchAllPokemon() async -> Results? {
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon") else {
+        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=100") else {
             return nil
         }
         
@@ -81,27 +84,45 @@ class NetworkServiceImplementation: NetworkService {
         }
     }
     
-    func fetchImagesForPokemon(urls: [URL]) async -> AsyncStream<UIImage?> {
-        AsyncStream { continuation in
+    func fetchImagesForPokemon(pokemonStream: AsyncStream<Pokemon?>) async -> AsyncStream<PokemonWithImage?> {
+        AsyncStream<PokemonWithImage?> { continuation in
             Task {
-                await withTaskGroup(of: UIImage?.self) { taskGroup in
-                    print("URLs \(urls)")
-                    for url in urls {
+                await withTaskGroup(of: PokemonWithImage?.self) { [weak self] taskGroup in
+                    guard let self = self else {
+                        continuation.finish()
+                        return
+                    }
+
+                    for await pokemon in pokemonStream {
                         taskGroup.addTask {
-                            do {
-                                let (data, _) = try await URLSession.shared.data(from: url)
-                                return UIImage(data: data)
-                            }
-                            catch {
+                            if let pokemon = pokemon, let url = URL(string: pokemon.sprites.frontDefault) {
+                                
+                                if let cachedPokemonWithImage = self.cache.object(forKey: pokemon.name as NSString) {
+                                    return cachedPokemonWithImage
+                                }
+                                
+                                do {
+                                    let (data, _) = try await URLSession.shared.data(from: url)
+                                    let image = UIImage(data: data)
+                                    
+                                    let pokemonWithImage = PokemonWithImage(name: pokemon.name, image: image)
+                                    self.cache.setObject(pokemonWithImage, forKey: pokemon.name as NSString)
+                                    
+                                    return pokemonWithImage
+                                }
+                                catch {
+                                    print("Trouble creating pokemon with image object")
+                                    return nil
+                                }
+                            } else {
                                 return nil
                             }
                         }
                     }
                     
-                    for await image in taskGroup {
-                        continuation.yield(image)
+                    for await pokemonWithImage in taskGroup {
+                        continuation.yield(pokemonWithImage)
                     }
-                    
                     continuation.finish()
                 }
             }
