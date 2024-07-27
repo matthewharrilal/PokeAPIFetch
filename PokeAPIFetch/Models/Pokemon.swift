@@ -12,17 +12,22 @@ struct Results: Decodable {
 }
 
 struct Result: Decodable {
-    let name: String
+    let name: String?
     let url: String
 }
 
 struct Pokemon: Decodable {
-    let abilities: [Ability]
+    let abilities: [Abilities]
     let sprites: Sprites
+}
+
+struct Abilities: Decodable {
+    let ability: Ability
 }
 
 struct Ability: Decodable {
     let name: String
+    let url: String
 }
 
 struct Sprites: Decodable {
