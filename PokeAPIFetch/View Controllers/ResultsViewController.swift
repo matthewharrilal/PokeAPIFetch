@@ -42,9 +42,15 @@ private extension ResultsViewController {
     func fetchDetailsForAllPokemon() async {
         let allPokemonDetails = await networkService.fetchAllPokemonDetails()
         
+        var sprites: [URL] = []
+        
         for await pokemon in allPokemonDetails {
-            print(pokemon?.sprites)
+            if let frontDefault = pokemon?.sprites.frontDefault, let url = URL(string: frontDefault) {
+                sprites.append(url)
+            }
         }
+        
+        await networkService.fetchImagesForPokemon(urls: sprites)
     }
 }
 

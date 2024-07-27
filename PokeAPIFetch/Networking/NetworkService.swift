@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
 protocol NetworkService: AnyObject {
     func fetchAllPokemon() async -> Results?
     func fetchAllPokemonDetails() async -> AsyncStream<Pokemon?>
+    func fetchImagesForPokemon(urls: [URL]) async -> AsyncStream<UIImage?>
 }
 
 class NetworkServiceImplementation: NetworkService {
@@ -76,6 +78,33 @@ class NetworkServiceImplementation: NetworkService {
                 }
             }
             
+        }
+    }
+    
+    func fetchImagesForPokemon(urls: [URL]) async -> AsyncStream<UIImage?> {
+        AsyncStream { continuation in
+            Task {
+                await withTaskGroup(of: UIImage?.self) { taskGroup in
+                    print("URLs \(urls)")
+                    for url in urls {
+                        taskGroup.addTask {
+                            do {
+                                let (data, _) = try await URLSession.shared.data(from: url)
+                                return UIImage(data: data)
+                            }
+                            catch {
+                                return nil
+                            }
+                        }
+                    }
+                    
+                    for await image in taskGroup {
+                        continuation.yield(image)
+                    }
+                    
+                    continuation.finish()
+                }
+            }
         }
     }
 }
