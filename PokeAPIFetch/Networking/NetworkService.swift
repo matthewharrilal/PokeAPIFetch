@@ -19,7 +19,7 @@ class NetworkServiceImplementation: NetworkService {
     private var cache: NSCache = NSCache<NSString, PokemonWithImage>()
     
     func fetchAllPokemon() async -> Results? {
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=20") else {
+        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=50") else {
             return nil
         }
         
