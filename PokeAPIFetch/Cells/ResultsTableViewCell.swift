@@ -14,6 +14,8 @@ class ResultsTableViewCell: UITableViewCell {
         String(describing: ResultsTableViewCell.self)
     }
     
+    private var hasAnimatedText: Bool = false
+    
     private let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -21,16 +23,16 @@ class ResultsTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private let titleLabel: UILabel = {
-        let label = UILabel()
+    private let titleLabel: TypewriterLabel = {
+        let label = TypewriterLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Placeholder"
         label.numberOfLines = 0
         return label
     }()
     
-    private let descriptionLabel: UILabel = {
-        let label = UILabel()
+    private let descriptionLabel: TypewriterLabel = {
+        let label = TypewriterLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.text = "Placeholder"

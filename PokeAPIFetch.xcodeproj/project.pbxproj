@@ -19,6 +19,7 @@
 		766B40082C531AFD003C623E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766B40072C531AFD003C623E /* NetworkService.swift */; };
 		766B400B2C531B2D003C623E /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766B400A2C531B2D003C623E /* Pokemon.swift */; };
 		76889CD32C55515100D2EA75 /* ResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76889CD22C55515100D2EA75 /* ResultsTableViewCell.swift */; };
+		76889CD62C55983700D2EA75 /* TypewriterLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76889CD52C55983700D2EA75 /* TypewriterLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		766B40072C531AFD003C623E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		766B400A2C531B2D003C623E /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		76889CD22C55515100D2EA75 /* ResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTableViewCell.swift; sourceTree = "<group>"; };
+		76889CD52C55983700D2EA75 /* TypewriterLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypewriterLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 		766B3FD42C531ABE003C623E /* PokeAPIFetch */ = {
 			isa = PBXGroup;
 			children = (
+				76889CD42C55982800D2EA75 /* Helpers */,
 				76889CD12C55513700D2EA75 /* Cells */,
 				766B40092C531B23003C623E /* Models */,
 				766B40062C531AEF003C623E /* Networking */,
@@ -166,6 +169,14 @@
 				76889CD22C55515100D2EA75 /* ResultsTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		76889CD42C55982800D2EA75 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				76889CD52C55983700D2EA75 /* TypewriterLabel.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,6 +312,7 @@
 			files = (
 				766B400B2C531B2D003C623E /* Pokemon.swift in Sources */,
 				766B3FDA2C531ABE003C623E /* ResultsViewController.swift in Sources */,
+				76889CD62C55983700D2EA75 /* TypewriterLabel.swift in Sources */,
 				76889CD32C55515100D2EA75 /* ResultsTableViewCell.swift in Sources */,
 				766B3FD62C531ABE003C623E /* AppDelegate.swift in Sources */,
 				766B40082C531AFD003C623E /* NetworkService.swift in Sources */,

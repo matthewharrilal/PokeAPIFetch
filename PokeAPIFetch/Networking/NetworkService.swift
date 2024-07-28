@@ -11,7 +11,6 @@ import UIKit
 protocol NetworkService: AnyObject {
     func fetchAllPokemon() async -> Results?
     func fetchAllPokemonDetails() async -> AsyncStream<Pokemon?>
-//    func fetchImagesForPokemon(urls: [URL]) async -> AsyncStream<UIImage?>
     func fetchImagesForPokemon(pokemonStream: AsyncStream<Pokemon?>) async -> AsyncStream<PokemonWithImage?>
 }
 
@@ -20,7 +19,7 @@ class NetworkServiceImplementation: NetworkService {
     private var cache: NSCache = NSCache<NSString, PokemonWithImage>()
     
     func fetchAllPokemon() async -> Results? {
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=100") else {
+        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=20") else {
             return nil
         }
         
