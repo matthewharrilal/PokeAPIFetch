@@ -10,7 +10,7 @@ import UIKit
 class ResultsViewController: UIViewController {
     
     private let networkService: NetworkService
-    private var pokemonWithImages: [PokemonWithImage] = []
+    private var pokemonWithImages: [PokemonWithImage?] = Array(repeating: nil, count: 5)
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -57,11 +57,23 @@ private extension ResultsViewController {
     func fetchPokemonWithImages() async {
         async let pokemonWithImageStream = networkService.fetchImagesForPokemon(pokemonStream: networkService.fetchAllPokemonDetails())
         
+        var counter: Int = 0
+        let initialDataSourceCount: Int = pokemonWithImages.count
         for await pokemonWithImage in await pokemonWithImageStream {
+            try await Task.sleep(1 * 1_000_000_000) // 2 seconds
+            
             if let pokemonWithImage = pokemonWithImage {
-                pokemonWithImages.append(pokemonWithImage)
                 
-                tableView.insertRows(at: [IndexPath(row: pokemonWithImages.count - 1, section: 0)], with: .bottom)
+                DispatchQueue.main.async {
+                    if counter < initialDataSourceCount{
+                        self.pokemonWithImages[counter] = pokemonWithImage
+                        self.tableView.reloadRows(at: [IndexPath(row: counter, section: 0)], with: .automatic)
+                        counter += 1
+                    } else {
+                        self.pokemonWithImages.append(pokemonWithImage)
+                        self.tableView.insertRows(at: [IndexPath(row: self.pokemonWithImages.count - 1, section: 0)], with: .automatic)
+                    }
+                }
             }
         }
     }
@@ -77,7 +89,10 @@ extension ResultsViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ResultsTableViewCell.identifier, for: indexPath) as? ResultsTableViewCell else { return UITableViewCell() }
         
         let pokemonWithImage = pokemonWithImages[indexPath.row]
-        cell.configure(pokemonWithImage)
+        
+        if let pokemonWithImage = pokemonWithImage {
+            cell.configure(pokemonWithImage)
+        }
         
         return cell
     }
