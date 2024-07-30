@@ -26,7 +26,6 @@ class ResultsTableViewCell: UITableViewCell {
     private let titleLabel: TypewriterLabel = {
         let label = TypewriterLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Placeholder"
         label.numberOfLines = 0
         return label
     }()
@@ -35,7 +34,6 @@ class ResultsTableViewCell: UITableViewCell {
         let label = TypewriterLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.text = "Placeholder"
         return label
     }()
     
@@ -47,6 +45,12 @@ class ResultsTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        contentView.subviews.forEach { $0.updateShimmerLayer() }
     }
 }
 
@@ -75,10 +79,15 @@ extension ResultsTableViewCell {
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             descriptionLabel.heightAnchor.constraint(equalToConstant: 24)
         ])
+        
+        contentView.subviews.forEach { $0.startShimmer() }
     }
     
     func configure(_ pokemonWithImage: PokemonWithImage) {
+        contentView.subviews.forEach { $0.stopShimmer() }
+        
         thumbnailImageView.image = pokemonWithImage.image
         titleLabel.text = pokemonWithImage.name
+        descriptionLabel.text = "Placeholder for now"
     }
 }
